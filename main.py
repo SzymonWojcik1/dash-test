@@ -1,42 +1,14 @@
 import dash
-from dash import dcc, html
-import plotly.express as px
-import pandas as pd
-from dash.dependencies import Input, Output
+from dash import html
 
-# Charger les données
-df = pd.DataFrame({
-    'Catégorie': ['A', 'B', 'C', 'D', 'E'],
-    'Valeur': [10, 20, 15, 25, 30]
-})
-
-# Initialiser l'application Dash
+# Create the Dash app
 app = dash.Dash(__name__)
 
+# Define the layout of the app
 app.layout = html.Div([
-    html.H1("📊 Dashboard Interactif avec Dash"),
-
-    dcc.Dropdown(
-        id='dropdown_categorie',
-        options=[{'label': cat, 'value': cat} for cat in df['Catégorie']],
-        value='A',
-        clearable=False
-    ),
-
-    dcc.Graph(id='graphique')
+    html.H1("Hello, Dash!", style={'textAlign': 'center'})
 ])
 
-# Callback pour mettre à jour le graphique
-@app.callback(
-    Output('graphique', 'figure'),
-    Input('dropdown_categorie', 'value')
-)
-
-def update_graph(selected_category):
-    df_filtered = df[df['Catégorie'] == selected_category]
-    fig = px.bar(df_filtered, x='Catégorie', y='Valeur', title="Graphique dynamique")
-    return fig
-
-# Lancer le serveur Dash
+# Run the app
 if __name__ == '__main__':
     app.run_server(debug=True)
